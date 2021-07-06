@@ -1,0 +1,10 @@
+__pycache__
+.VSCodeCounter
+junk
+node_modules
+styles.css
+.env
+package-lock.json
+package.json
+tailwind.config.js
+public

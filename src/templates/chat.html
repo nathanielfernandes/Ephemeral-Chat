@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta property="og:title" content="Emepheral Chat" />
+    <meta property="og:image" content="https://cdn.discordapp.com/emojis/860273780563509279.gif?v=1" />
+    <meta property="og:description" content="basically discord + omegle" />
+    <meta property="og:type" content="website">
+    <meta name="theme-color" content="#a78bfa">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css">
+    <link rel="stylesheet" href="src/static/tailwind.css">
+
+
+    <title>Ephemeral Chat</title>
+
+    <script type="text/javascript" src="src/static/discomoji.js"></script>
+</head>
+
+
+<body class="bg-gray-800">
+
+    <main class="flex flex-col items-center justify-center h-screen sm:mt-5">
+        <h1 class="font-normal text-4xl text-gray-100"><i class="fas fa-sync-alt"></i> Ephemeral
+            Chat </h1>
+        <nav
+            class="flex flex-col text-center sm:flex-row sm:text-left sm:justify-between shadow sm:items-baseline w-10/12">
+            <div class="text-green-600 font-bold flex items-center space-x-1 text-center mb-1 justify-center">
+                <i class="fas fa-dot-circle"></i>
+                <p id="online-members"></p>
+                <p>Members Currently In Chat</p>
+            </div>
+            <div class="flex space-x-1">
+                <div
+                    class="mb-1 bg-{{ color }}-400 hover:bg-{{ color }}-500 rounded px-3 py-1 duration-200 select-none cursor-pointer">
+                    <span class="flex items-center font-light text-1xl text-gray-100 whitespace-nowrap">
+                        <p>Chat ID:&nbsp;</p>
+                        <p id="chatID"></p>
+                        &nbsp;&nbsp;
+
+                    </span>
+
+                </div>
+                <div onclick="copyClip(groupID)"
+                    class="mb-1 bg-{{ color }}-400 hover:bg-{{ color }}-500 rounded px-3 py-1 duration-200 select-none cursor-pointer">
+                    <i class="fas fa-clipboard text-gray-100"></i>
+                </div>
+                <div onclick="copyClip(`https://${window.location.host}/?group=${groupID}`)"
+                    class="mb-1 bg-{{ color }}-400 hover:bg-{{ color }}-500 rounded px-3 py-1 duration-200 select-none cursor-pointer">
+                    <i class="fas fa-link text-gray-100"></i>
+                </div>
+            </div>
+
+
+            <div class="mb-1 bg-{{ color }}-400 hover:bg-{{ color }}-500 rounded px-3 py-1 duration-200 ">
+                <span class="flex items-center font-light text-1xl text-gray-100">
+                    <img class="rounded-full h-8 w-8 mr-3" src="{{ avatar }}" onerror="this.src='{{ default_avatar }}'">
+                    <p>{{username}}</p>
+                </span>
+            </div>
+        </nav>
+
+        <div class=" w-10/12 h-4/6 center mx-auto mb-44 sm:mb-0">
+            <ul id="chat" class=" h-full flex flex-col-reverse bg-gray-700 shadow-md rounded px-8 pl-1 pr-1 pt-6 pb-4 overflow-hidden overflow-y-scroll
+                mb-1" action="/newuser">
+            </ul>
+            <div class="mb-2 flex">
+                <form class="w-full flex flex-row items-center space-x-1" onsubmit="chathandler.sendMessage(event)">
+                    <input id="messageInput" class="appearance-none rounded w-full py-2 px-4 text-gray-100 bg-gray-600
+                     leading-tight focus:outline-none focus:shadow-outline" id="username" type="text"
+                        name="messageInput" placeholder="Message..." autocomplete="off">
+                    <div class="flex flex-row space-x-1">
+                        <button type="button" onclick="chathandler.toggleEmojis()"
+                            class="bg-{{ color }}-400 hover:bg-{{ color }}-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline duration-200 cursor-pointer select-none ">
+                            <i class="fas fa-laugh-wink"></i>
+                        </button>
+                        <input
+                            class="bg-{{ color }}-400 hover:bg-{{ color }}-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline duration-200 cursor-pointer select-none"
+                            type="submit" value="Send">
+                        </input>
+                    </div>
+                </form>
+            </div>
+            <div>
+                <div id="emoji-menu" style="display:none"
+                    class="rounded px-1 py-1 bg-{{ color }}-400 flex flex-wrap max-w-full">
+                </div>
+            </div>
+        </div>
+    </main>
+    <script type="text/javascript" src="src/static/chat.js"></script>
+    <script type="text/javascript" src="src/static/cleanUrl.js"></script>
+</body>
+
+</html>

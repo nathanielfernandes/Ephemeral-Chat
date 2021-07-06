@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta property="og:title" content="Emepheral Chat" />
+    <meta property="og:image" content="https://cdn.discordapp.com/emojis/860273780563509279.gif?v=1" />
+    <meta property="og:description" content="basically discord + omegle" />
+    <meta property="og:type" content="website">
+    <meta name="theme-color" content="#a78bfa">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css">
+    <link rel="stylesheet" href="src/static/tailwind.css">
+
+    <title>Ephemeral Chat</title>
+</head>
+
+
+<body class="bg-gray-800 ">
+    <main class="flex items-center justify-center h-screen">
+        <div class="w-full max-w-lg center mx-auto">
+            <form id="form" class=" bg-gray-100 shadow-md rounded px-8 pt-6 pb-4 mb-4" action="/newuser">
+                <div class="text-center mb-5">
+                    <h1 class="font-bold text-xl text-gray-700"><i class="fas fa-sync-alt"></i> Ephemeral
+                        Chat</h1>
+                </div>
+                <input id="color" type="text" name="color" class="hidden">
+
+                <div class="mb-3">
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="username">
+                        Username
+                    </label>
+                    <div class="flex space-x-1">
+                        <input class="shadow appearance-none border {{ username }} rounded w-full py-2 px-3 text-gray-700
+                        leading-tight focus:outline-none focus:shadow-outline" id="username" type="text"
+                            name="username" placeholder="Username">
+
+                        <button onclick="cycleColor()" id="colorButton"
+                            class="shadow focus:shadow-outline bg-purple-400 hover:bg-purple-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline duration-200 cursor-pointer select-none"
+                            type="button"><i class="fas fa-palette"></i></button>
+                    </div>
+
+                    {% if username %}
+                    <p class="text-red-500 text-xs italic">Please enter a valid username. <br>(max length 24 of
+                        alphanumeric
+                        characters only)</p>
+                    {% endif %}
+                </div>
+                <div class="mb-3">
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="avatar">
+                        Avatar
+                    </label>
+                    <input
+                        class="shadow appearance-none border {{ avatar }} rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        id="avatar" type="text" placeholder="https://someimage.png (optional)" name="avatar">
+                    {% if avatar %}
+                    <p class="text-red-500 text-xs italic">Please enter a valid avatar or none at all.</p>
+                    {% endif %}
+                </div>
+                <div class="mt-10 mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="avatar">
+                        Chat ID
+                    </label>
+                    <input
+                        class="shadow appearance-none border {{ group }}rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        id="group" type="text" placeholder="Enter a chat ID to join it. Leave empty to create one."
+                        name="group" {% if group_id %} value="{{ group_id }}" {% endif %}>
+                    {% if group %}
+                    <p class="text-red-500 text-xs italic">Please enter a valid group id or none at all.</p>
+                    {% endif %}
+                </div>
+                <div class="flex justify-center">
+                    <input id="startChatting"
+                        class=" shadow focus:shadow-outline bg-purple-400 hover:bg-purple-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline duration-200 cursor-pointer select-none"
+                        type="submit" value="Start Chatting">
+                    </input>
+
+                </div>
+                <div class="flex justify-center pt-2">
+                    {% if failed%}
+                    <p class="text-red-500 text-xs italic">Failed to verify connection.</p>
+                    {% endif %}
+                    {% if closed%}
+                    <p class="text-red-500 text-xs italic">Connection was closed.</p>
+                    {% endif %}
+                    {% if limited%}
+                    <p class="text-red-500 text-xs italic">Too many requests. Slowdown!</p>
+                    {% endif %}
+                </div>
+
+            </form>
+            <p class="text-center text-gray-500 text-xs">
+                &copy;2021 Nathaniel Fernandes <br> Made with FastApi and tailwindcss
+            </p>
+        </div>
+    </main>
+    <script type="text/javascript" src="src/static/main.js"></script>
+    <script type="text/javascript" src="src/static/cleanUrl.js"></script>
+</body>
+
+</html>
