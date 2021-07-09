@@ -18,8 +18,13 @@ from utils.ConnectionManager import ConnectionManager
 from utils.Message import Message
 from utils.Ratelimits import RatelimitManager
 
+
 VALIDURL = re.compile(r"^([a-z\-_0-9\/\:\.]*\.(jpg|jpeg|png|gif|webp))", re.IGNORECASE)
-DEFAULT_PFP = "https://cdn.discordapp.com/attachments/792686378366009354/862029567026659328/how-to-remove-profile-picture-on-zoom-12.png"
+URL = re.compile(
+    "(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})",
+    re.IGNORECASE,
+)
+DEFAULT_PFP = "https://cdn.discordapp.com/attachments/830269354649452564/863169775646670888/unknown.png"
 COLORS = ("purple", "pink", "red", "yellow", "green", "blue", "indigo")
 SLOWDOWN = "Slow Down! 5s (Only you can see this message)"
 ignore = []

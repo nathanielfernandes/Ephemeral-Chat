@@ -13,6 +13,7 @@ The front end was made with [tailwindcss](https://tailwindcss.com/) and jinja te
 * It is impossible to spoof your connection to act as another user.
 * Anyone can create a room that anyone else can join using a shareable link. 
 * Users can set their name, color, and avatar.
+* The chat supports link previews and image previews.
 * The chat natively supports any Discord emojis that are sent, and has a couple pre-picked emojis in it's emoji menu.
 * The emoji menu is dynamic and adds new emojis that were sent in the chat into your emoji menu.
 * The leader of the group is shown with a crown, which gets randomly passed to another user when they leave.
@@ -20,9 +21,9 @@ The front end was made with [tailwindcss](https://tailwindcss.com/) and jinja te
  
 
 ### Screen Shots
-<img src="https://cdn.discordapp.com/attachments/792686378366009354/862046106334789682/unknown.png" width=1000>
-<img src="https://cdn.discordapp.com/attachments/792686378366009354/862046210188378122/unknown.png" width=1000>
-<img src="https://cdn.discordapp.com/attachments/792686378366009354/862046637994934322/unknown.png" width=1000>
-<img src="https://cdn.discordapp.com/attachments/792686378366009354/862046892053626900/unknown.png" width=1000>
+<img src="https://cdn.discordapp.com/attachments/792686378366009354/863201239582900244/unknown.png" width=1000>
+<img src="https://cdn.discordapp.com/attachments/792686378366009354/863201495645814814/unknown.png" width=1000>
+<img src="https://cdn.discordapp.com/attachments/792686378366009354/863201858284683264/unknown.png" width=1000>
+<img src="https://cdn.discordapp.com/attachments/792686378366009354/863202000673832980/unknown.png" width=1000>
 
 

@@ -3,19 +3,30 @@ const MESSAGE = "message";
 const EPHEMERAL = "ephemeral";
 
 const VALIDURL = /([a-z\-_0-9\/\:\.]*\.(jpg|jpeg|png|gif|webp))/gi
-const DEFAULT_PFP = "https://cdn.discordapp.com/attachments/792686378366009354/862029567026659328/how-to-remove-profile-picture-on-zoom-12.png";
+const DEFAULT_PFP = "https://cdn.discordapp.com/attachments/830269354649452564/863169775646670888/unknown.png";
+const URL = /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi
 
 const urlHost = window.location.host;
 const urlParams = new URLSearchParams(window.location.search);
 const clientUuid = urlParams.get('user');
 const groupID = urlParams.get("group");
 
-const messageClasses = ['bg-gray-700', 'hover:bg-gray-600', 'duration-100', 'rounded', 'py-1', 'mb-1'];
+const messageClasses = ['bg-gray-700', 'rounded', 'py-1', 'mb-1'];
 const userinfoClasses = ['flex', 'flex-row', 'items-center', 'py-1'];
 const avatarClasses = ['rounded-full', 'h-8', 'w-8', 'mr-2', 'ml-3'];
 const usernameClasses = ['font-medium', 'text-1xl'];
 const timeClasses = ['font-thin', 'text-gray-400', 'ml-5', 'text-xs'];
-const contentClasses = ['font-light', 'text-gray-100', 'ml-7', 'mb-1', 'flex', 'flex-row'];
+const contentClasses = ['font-light', 'text-gray-100', 'ml-7', "flex", "flex-row"];
+const interClasses = ['hover:bg-gray-600', 'rounded', 'duration-100', "space-y-1", "my-1"];
+
+const imageClasses = ["rounded", "ml-7", "mb-1", "max-w-xs"];
+
+const embedClasses = ["bg-gray-800", "px-3", "py-1", "rounded", "max-w-md", "w-max", "flex", "flex-none", "flex-wrap", "ml-7"];
+const embedTitle = ["font-bold", "hover:underline", "text-xs"];
+const embedDesc = ["text-gray-100", "text-xs"];
+const embedImage = ["my-2", "max-w-min", "min-w-full", "rounded", "max-h-40", "flex", "items-center", "overflow-hidden"];
+
+
 const crownClasses = ["fas", "fa-crown", "text-yellow-500"]
 
 const eventClasses = ['bg-gray-700', 'text-center', 'hover:bg-gray-600', 'duration-100', 'rounded', 'py-1'];
@@ -203,7 +214,64 @@ class ChatHandler {
         content.appendChild(this.getText(json.message));
         contentClasses.forEach(_class => { content.classList.add(_class) })
 
-        message.appendChild(content);
+        content.innerHTML = content.innerHTML.replace(URL, `<a type="text" href="$1" target="blank" class="hover:underline px-1 text-${json.color}-400" >$1</a>`);
+
+        var intermediate = document.createElement("div");
+        intermediate.appendChild(content);
+        interClasses.forEach(_class => { intermediate.classList.add(_class) });
+
+
+        json.images.forEach(url => {
+            var img = document.createElement("img");
+            img.src = url;
+            img.setAttribute("onerror", "this.style.display='none';");
+            imageClasses.forEach(_class => { img.classList.add(_class) });
+            intermediate.appendChild(img);
+        })
+
+        json.embeds.forEach(e => {
+            var embed = document.createElement("div");
+            embedClasses.forEach(_class => { embed.classList.add(_class) });
+            embed.classList.add(`embed-color-${json.color}`);
+
+            var info = document.createElement("div");
+            info.classList.add("mr-2");
+
+            var title = document.createElement("a");
+            embedTitle.forEach(_class => { title.classList.add(_class) });
+            title.appendChild(this.getText(e.title));
+            title.classList.add(`text-${json.color}-400`);
+            title.setAttribute("href", e.url);
+            title.setAttribute("target", "blank");
+
+            var desc = document.createElement("p");
+            embedDesc.forEach(_class => { desc.classList.add(_class) })
+            desc.appendChild(this.getText(e.description));
+
+            info.appendChild(title);
+            info.appendChild(desc);
+
+
+            embed.appendChild(info);
+
+
+            if (e.image) {
+                var thumb = document.createElement("div");
+                embedImage.forEach(_class => { thumb.classList.add(_class) });
+
+                var thumbnail = document.createElement("img");
+                thumbnail.src = e.image;
+                thumbnail.setAttribute("onerror", "this.style.display='none';");
+
+                thumb.appendChild(thumbnail);
+                embed.appendChild(thumb);
+            }
+
+            intermediate.appendChild(embed);
+
+        })
+
+        message.appendChild(intermediate);
 
         if (!fresh) {
             message.setAttribute("client-uuid", json.uuid);
